@@ -37,9 +37,12 @@ interface Message {
 
 export type ActiveTab = 'query' | 'compare' | 'library';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+const apiUrl = (path: string) => `${API_BASE_URL}${path}`;
+
 // ── API helpers ──────────────────────────────────────────────
 async function apiQuery(query: string, topK: number) {
-  const res = await fetch('/api/query', {
+  const res = await fetch(apiUrl('/api/query'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query, top_k: topK }),
@@ -49,7 +52,7 @@ async function apiQuery(query: string, topK: number) {
 }
 
 async function apiCompare(paperTitles: string[]) {
-  const res = await fetch('/api/compare', {
+  const res = await fetch(apiUrl('/api/compare'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ paper_titles: paperTitles }),
@@ -59,24 +62,24 @@ async function apiCompare(paperTitles: string[]) {
 }
 
 async function apiPapers(): Promise<{ papers: Paper[] }> {
-  const res = await fetch('/api/papers');
+  const res = await fetch(apiUrl('/api/papers'));
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
 
 async function apiFetchCounts(): Promise<Record<string, number>> {
-  const res = await fetch('/api/fetch-counts');
+  const res = await fetch(apiUrl('/api/fetch-counts'));
   if (!res.ok) return {};
   return res.json();
 }
 
 async function apiNewChat() {
-  const res = await fetch('/api/new-chat', { method: 'POST' });
+  const res = await fetch(apiUrl('/api/new-chat'), { method: 'POST' });
   return res.json();
 }
 
 async function apiClear() {
-  await fetch('/api/clear', { method: 'POST' });
+  await fetch(apiUrl('/api/clear'), { method: 'POST' });
 }
 
 // ── App ──────────────────────────────────────────────────────

@@ -10,6 +10,9 @@ import {
 } from 'lucide-react';
 import type { ActiveTab } from '../App';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+const apiUrl = (path: string) => `${API_BASE_URL}${path}`;
+
 interface SidebarProps {
   fetchCounts: Record<string, number>;
   ragDepth: number;
@@ -70,7 +73,7 @@ export function Sidebar({
       const form = new FormData();
       form.append('file', uploadedFile);
       form.append('question', question);
-      const res = await fetch('/api/upload-paper', { method: 'POST', body: form });
+      const res = await fetch(apiUrl('/api/upload-paper'), { method: 'POST', body: form });
       if (!res.ok) throw new Error(await res.text());
       const data = await res.json();
       onUploadReview(data.review, data.title ?? uploadedFile.name);
