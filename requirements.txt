@@ -1,0 +1,29 @@
+# ============================================================
+# Scholar Graphite v2 — Python Dependencies
+# Install: pip install -r requirements.txt
+# (In venv: python -m venv venv && venv\Scripts\activate && pip install -r requirements.txt)
+# ============================================================
+
+# ── Core AI & LLM ─────────────────────────────────────────────
+groq>=0.9.0                         # Groq API client (LLaMA 3.3 70B)
+sentence-transformers>=2.7.0        # Bi-encoder embeddings + cross-encoder reranker
+faiss-cpu>=1.8.0                    # FAISS vector store (CPU, no GPU needed)
+torch>=2.0.0                        # Required by sentence-transformers
+torchvision>=0.15.0                 # Required by transformers
+
+# ── FastAPI backend ────────────────────────────────────────────
+fastapi>=0.111.0                    # REST API framework
+uvicorn[standard]>=0.29.0           # ASGI server (WebSocket support)
+python-multipart>=0.0.9             # File upload (UploadFile)
+pydantic>=2.0.0                     # Data validation
+
+# ── HTTP Requests ─────────────────────────────────────────────
+requests>=2.31.0                    # Sync HTTP (fetchers + Unpaywall)
+urllib3>=2.0.0
+
+# ── PDF Parsing ───────────────────────────────────────────────
+PyMuPDF>=1.24.0                     # Primary PDF parser (fitz) — Module 5
+PyPDF2>=3.0.0                       # Fallback PDF parser
+
+# ── Data Processing ───────────────────────────────────────────
+numpy>=1.26.0                       # Cosine similarity, vector ops (Modules 1, 4)
